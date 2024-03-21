@@ -1,2 +1,6 @@
 [tool.black]
 line-length = 79
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "app_tracker.settings"
+python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]

@@ -27,6 +27,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
                 self.fields.pop(field_name)
 
     comments = CommentSerializer(many=True)
+    status = serializers.CharField(required=False)
 
     class Meta:
         model = Application
