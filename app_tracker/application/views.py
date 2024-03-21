@@ -9,8 +9,15 @@ from app_tracker.application.models import Application, Comment
 
 
 class ApplicationViewSet(viewsets.ModelViewSet):
+    """
+    Viewset for applications. This viewset is responsible for GET, POST,
+    PATCH/PUT, DELETE endpoints for an application
+    """
+
     serializer_class = ApplicationSerializer
     permission_classes = [HasGroupPermission]
+
+    # Group specific permissions
     permission_groups = {
         "list": ["AppViewer"],
         "create": ["AppCreator"],
@@ -21,6 +28,10 @@ class ApplicationViewSet(viewsets.ModelViewSet):
     }
     queryset = Application.objects.all()
 
+    # Only display comments when GETing an individual application
+    # This can be expanded to show only certain fields depending on the
+    # user making the request. i.e.only the owner of an application can
+    # change fields like 'applicant_name'
     def get_serializer(self, *args, **kwargs):
         kwargs["context"] = self.get_serializer_context()
         fields = [
@@ -47,6 +58,11 @@ class ApplicationViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """
+    Viewset for comments. This viewset is responsible for GET, POST,
+    PATCH/PUT, DELETE endpoints for a comment
+    """
+
     queryset = Comment.objects.all()
 
     serializer_class = CommentSerializer

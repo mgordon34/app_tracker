@@ -10,6 +10,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
+    """
+    Application Serializer. Related field comments is included for an
+    individual GET of an application
+    """
+
     def __init__(self, *args, **kwargs):
         fields = kwargs.pop("fields", None)
 
@@ -32,12 +37,4 @@ class ApplicationSerializer(serializers.ModelSerializer):
             "comments",
             "created",
             "modified",
-        ]
-
-
-class AppApproverSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Application
-        fields = [
-            "status",
         ]
