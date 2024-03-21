@@ -10,6 +10,17 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop("fields", None)
+
+        super().__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
     comments = CommentSerializer(many=True)
 
     class Meta:
@@ -21,4 +32,12 @@ class ApplicationSerializer(serializers.ModelSerializer):
             "comments",
             "created",
             "modified",
+        ]
+
+
+class AppApproverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = [
+            "status",
         ]

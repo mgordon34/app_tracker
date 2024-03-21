@@ -10,7 +10,7 @@ class Application(models.Model):
         max_length=50,
     )
     status = models.CharField(
-        default=ApplicationStatus.SUBMITTED,
+        default=ApplicationStatus.SUBMITTED.value,
         max_length=50,
         choices=ApplicationStatus.choices(),
     )
