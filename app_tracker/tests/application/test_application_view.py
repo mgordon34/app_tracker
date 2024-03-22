@@ -76,26 +76,34 @@ class TestApplication:
         assert application is not None
         assert_applications_match(mock_application, [application])
 
-    def test_edit_application(self, client):
+    @pytest.mark.parametrize(
+        "status,expected_code",
+        [
+            ("ACCEPTED", 200),
+            ("REJECTED", 200),
+            ("bad_status", 400),
+        ],
+    )
+    def test_edit_application(self, client, status, expected_code):
         user = create_user(["AppApprover"])
         client.force_authenticate(user=user)
         applicant_name = "Test Applicant"
-        new_status = "APPROVED"
 
         # generate mock application
         mock_application = (
             baker.make(Application, applicant_name=applicant_name),
         )
-        payload = {"status": new_status}
+        payload = {"status": status}
 
         # call api
         response = client.patch(
             f"/applications/{mock_application[0].id}/", payload
         )
 
-        assert response.status_code == 200
         application_json = response.json()
-        assert application_json["status"] == new_status
+        assert response.status_code == expected_code
+        if expected_code == 200:
+            assert application_json["status"] == status
 
     def test_delete_application(self, client):
         user = create_user(["AppEditor"])
