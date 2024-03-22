@@ -66,8 +66,10 @@ JSON Payload:\
 
 Spin up containers:
 - `docker-compose up -d`
+
 Perform migrations:
 - `docker-compose exec web python manage.py migrate`
+
 Run tests:
 - `docker-compose exec web pytest`
 
