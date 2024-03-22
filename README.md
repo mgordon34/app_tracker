@@ -68,6 +68,8 @@ Spin up containers:
 - `docker-compose up -d`
 Perform migrations:
 - `docker-compose exec web python manage.py migrate`
+Run tests:
+- `docker-compose exec web pytest`
 
 I added a data migration to pre-populate the users and user groups:
 - admin:password - superuser with all permissions
