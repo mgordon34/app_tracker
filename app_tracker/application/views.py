@@ -24,7 +24,7 @@ class ApplicationViewSet(viewsets.ModelViewSet):
         "update": ["AppApprover"],
         "partial_update": ["AppApprover"],
         "retrieve": ["AppViewer"],
-        "destory": ["AppEditor"],
+        "destroy": ["AppEditor"],
     }
     queryset = Application.objects.all()
 
@@ -63,6 +63,17 @@ class CommentViewSet(viewsets.ModelViewSet):
     PATCH/PUT, DELETE endpoints for a comment
     """
 
-    queryset = Comment.objects.all()
-
     serializer_class = CommentSerializer
+    permission_classes = [HasGroupPermission]
+
+    # Group specific permissions
+    permission_groups = {
+        "list": ["AppViewer"],
+        "create": ["AppEditor"],
+        "update": ["AppEditor"],
+        "partial_update": ["AppEditor"],
+        "retrieve": ["AppViewer"],
+        "destroy": ["AppEditor"],
+    }
+
+    queryset = Comment.objects.all()
