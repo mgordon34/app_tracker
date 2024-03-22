@@ -9,5 +9,5 @@ class ApplicationStatus(Enum):
     REJECTED = "REJECTED"
 
     @classmethod
-    def choices(cls):
+    def get_choices(cls):
         return [(v.value, v.name) for v in cls]

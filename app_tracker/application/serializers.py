@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from app_tracker.application.models import Application, Comment
+from app_tracker.application.enums.application_status import ApplicationStatus
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -27,7 +28,9 @@ class ApplicationSerializer(serializers.ModelSerializer):
                 self.fields.pop(field_name)
 
     comments = CommentSerializer(many=True)
-    status = serializers.CharField(required=False)
+    status = serializers.ChoiceField(
+        choices=ApplicationStatus.get_choices(), required=False
+    )
 
     class Meta:
         model = Application

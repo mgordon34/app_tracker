@@ -12,7 +12,7 @@ class Application(models.Model):
     status = models.CharField(
         default=ApplicationStatus.SUBMITTED.value,
         max_length=50,
-        choices=ApplicationStatus.choices(),
+        choices=ApplicationStatus.get_choices(),
     )
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
